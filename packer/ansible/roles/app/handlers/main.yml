@@ -1,0 +1,6 @@
+---
+- name: Restart app
+  systemd:
+    name: httpbin
+    state: restarted
+    daemon_reload: yes

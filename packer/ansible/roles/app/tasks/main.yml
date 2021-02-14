@@ -1,0 +1,18 @@
+---
+- name: Create service file
+  template:
+    src: httpbin.service.j2
+    dest: /etc/systemd/system/httpbin.service
+    owner: root
+    group: root
+    mode: 0644
+  notify: Restart app
+
+- name: Flush handlers
+  meta: flush_handlers
+
+- name: Start app
+  systemd:
+    name: httpbin
+    state: started
+    enabled: yes

@@ -1,0 +1,21 @@
+[Unit]
+Description=Httpbin service
+After=syslog.target docker.service
+
+[Service]
+TimeoutStartSec=0
+Restart=always
+RestartSec=10
+
+ExecStartPre=-/usr/bin/docker kill httpbin
+ExecStartPre=-/usr/bin/docker rm httpbin
+
+ExecStart=/usr/bin/docker run \
+  --name httpbin \
+  --publish 80:80 \
+  kennethreitz/httpbin
+
+ExecStop=/usr/bin/docker stop httpbin
+
+[Install]
+WantedBy=multi-user.target
